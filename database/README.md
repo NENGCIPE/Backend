@@ -8,7 +8,7 @@
 <img width="700" alt="conceptual_data_modeling" src="https://user-images.githubusercontent.com/102461290/232426942-91e229b6-a62c-4708-be0b-b33b64a2be24.png">
 
 ### [data logical modeling] 23년 4월 21일 (작성자: 추세빈)
-<img width="700" alt="냉시피_논리적모델링" src="https://user-images.githubusercontent.com/102461290/233581842-fb8b4870-eb7d-4ec9-9072-29f7727df749.png">
+<img width="700" alt="냉_논리적 모델링" src="https://user-images.githubusercontent.com/102461290/233584597-46bdf057-c8b2-49f7-815b-4a6dae50d3af.png">
 
 #### 논의할 것
 1. FK가 너무 많아서 융통성있게 줄여야 할 듯하다.
