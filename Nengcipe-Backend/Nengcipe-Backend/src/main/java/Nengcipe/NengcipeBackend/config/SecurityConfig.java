@@ -1,6 +1,8 @@
 package Nengcipe.NengcipeBackend.config;
 
 import Nengcipe.NengcipeBackend.filter.JwtAuthenticationFilter;
+import Nengcipe.NengcipeBackend.filter.JwtAuthorizationFilter;
+import Nengcipe.NengcipeBackend.repository.MemberRepository;
 import Nengcipe.NengcipeBackend.util.JwtUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +13,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.filter.CorsFilter;
 
@@ -21,6 +24,7 @@ public class SecurityConfig {
     private final CorsFilter corsFilter;
     private final JwtUtil jwtUtil;
     private final ObjectMapper objectMapper;
+    private final MemberRepository memberRepository;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
         return httpSecurity
@@ -28,23 +32,28 @@ public class SecurityConfig {
                 .formLogin().disable()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().apply(new MyCustomDsl())
+                .and().apply(new MyCustom())
                 .and().addFilter(corsFilter)
                 .csrf().disable()
                 .cors().and()
                 .authorizeRequests()
-                .requestMatchers("/api/auth").authenticated()
+                .requestMatchers("/api/users/auth").authenticated()
                 .anyRequest().permitAll()
                 .and()
                 .build();
     }
 
-    public class MyCustomDsl extends AbstractHttpConfigurer<MyCustomDsl, HttpSecurity> {
+
+
+    public class MyCustom extends AbstractHttpConfigurer<MyCustom, HttpSecurity> {
         @Override
         public void configure(HttpSecurity http) throws Exception {
             AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
+            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtUtil, objectMapper);
+            jwtAuthenticationFilter.setFilterProcessesUrl("/api/users/login");
             http
-                    .addFilter(new JwtAuthenticationFilter(authenticationManager, jwtUtil, objectMapper));
+                    .addFilter(jwtAuthenticationFilter)
+                    .addFilter(new JwtAuthorizationFilter(authenticationManager, memberRepository, jwtUtil));
 
         }
     }

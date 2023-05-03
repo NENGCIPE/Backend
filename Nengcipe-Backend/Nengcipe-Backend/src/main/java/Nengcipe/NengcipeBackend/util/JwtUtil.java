@@ -27,7 +27,7 @@ public class JwtUtil {
 
     public String createJwt(String memberId, Long id) {
         Claims claims = Jwts.claims();
-        claims.put("username", memberId);
+        claims.put("memberId", memberId);
         claims.put("id", id);
         System.out.println(secretKey);
 

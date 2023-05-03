@@ -22,7 +22,7 @@ public class PrincipalDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return member.getMemberPwd();
+        return member.getPassword();
     }
 
     @Override

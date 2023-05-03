@@ -27,7 +27,7 @@ public class MemberService {
             throw new DuplicatedMemberIdException("아이디가 중복됩니다.", memberReq);
 
         }
-        memberDto.setMemberPwd(encoder.encode(memberDto.getMemberPwd()));
+        memberDto.setPassword(encoder.encode(memberDto.getPassword()));
         Member member = MemberDto.toEntity(memberDto);
 
         return memberRepository.save(member);
@@ -50,7 +50,7 @@ public class MemberService {
             throw new MemberNotFoundException("해당 유저를 찾을 수가 없습니다.", memberReq);
         }
         Member member = findMember.get();
-        if (encoder.matches(memberPwd, member.getMemberPwd())) {
+        if (encoder.matches(memberPwd, member.getPassword())) {
             return "로그인 성공";
         }
         throw new MemberPwdException("비밀번호가 일치하지 않습니다.");

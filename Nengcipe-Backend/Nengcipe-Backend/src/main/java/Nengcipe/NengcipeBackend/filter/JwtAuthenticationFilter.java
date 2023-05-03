@@ -8,18 +8,19 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
 @RequiredArgsConstructor
+@Slf4j
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
@@ -30,12 +31,53 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         MemberDto memberDto = null;
+        ResultResponse res=null;
         try {
             memberDto = objectMapper.readValue(request.getInputStream(), MemberDto.class); //request로 들어온 JSON 형식을 MemberDto로 가져옴
+            log.info("id : {} 로그인 시도", memberDto.getMemberId());
+            if (memberDto.getMemberId() == null) {
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+                response.setCharacterEncoding("utf-8");
+                MemberResponseDto memberResponseDto = new MemberResponseDto(memberDto.getMemberId());
+                log.info("id : {} 로그인 실패", memberDto.getMemberId());
+                res = ResultResponse.builder()
+                        .code(HttpServletResponse.SC_BAD_REQUEST)
+                        .message("유저 아이디는 필수 값입니다.")
+                        .result(memberResponseDto).build();
+                try {
+                    String s = objectMapper.writeValueAsString(res);
+                    PrintWriter writer = response.getWriter();
+                    writer.write(s);
+                    return null;
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            } else if (memberDto.getPassword() == null) {
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+                response.setCharacterEncoding("utf-8");
+                MemberResponseDto memberResponseDto = new MemberResponseDto(memberDto.getMemberId());
+                log.info("id : {} 로그인 실패", memberDto.getMemberId());
+                res = ResultResponse.builder()
+                        .code(HttpServletResponse.SC_BAD_REQUEST)
+                        .message("비밀번호는 필수 값입니다.")
+                        .result(memberResponseDto).build();
+                try {
+                    String s = objectMapper.writeValueAsString(res);
+                    PrintWriter writer = response.getWriter();
+                    writer.write(s);
+                    return null;
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(memberDto.getMemberId(), memberDto.getMemberPwd());
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(memberDto.getMemberId(), memberDto.getPassword());
         try {
             //인증 실행
             Authentication authenticate = authenticationManager.authenticate(token);
@@ -47,11 +89,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             response.setCharacterEncoding("utf-8");
-            memberDto.setMemberPwd(null);
-            ResultResponse res = ResultResponse.builder()
+            MemberResponseDto memberResponseDto = new MemberResponseDto(memberDto.getMemberId());
+            log.info("id : {} 로그인 실패", memberDto.getMemberId());
+            res = ResultResponse.builder()
                     .code(HttpServletResponse.SC_NOT_FOUND)
                     .message("해당 유저를 찾지 못했습니다.")
-                    .result(memberDto).build();
+                    .result(memberResponseDto).build();
             try {
                 String s = objectMapper.writeValueAsString(res);
                 PrintWriter writer = response.getWriter();
@@ -69,7 +112,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         PrincipalDetails principal = (PrincipalDetails) authResult.getPrincipal();
         Member member = principal.getMember();
         String jwt = jwtUtil.createJwt(member.getMemberId(), member.getId());
-        response.setHeader("Authorization", jwt);
+        log.info("id : {} 로그인 성공", member.getMemberId());
+        //서블릿으로 JSON 응답
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setCharacterEncoding("utf-8");

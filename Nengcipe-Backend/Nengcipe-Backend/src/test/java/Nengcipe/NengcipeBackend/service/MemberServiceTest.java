@@ -20,7 +20,7 @@ class MemberServiceTest {
     void registerMemberTest() {
         MemberDto member = MemberDto.builder()
                 .memberId("abcd")
-                .memberPwd("123456").build();
+                .password("123456").build();
         Member member1 = memberService.registerMember(member);
         Assertions.assertThat(member1.getMemberId()).isEqualTo(member.getMemberId());
     }

@@ -21,7 +21,7 @@ class MemberRepositoryTest {
     void saveMember() {
         Member member = Member.builder()
                 .memberId("abcd")
-                .memberPwd("123456")
+                .password("123456")
                 .build();
         Member save = memberRepository.save(member);
         Assertions.assertThat(member.getMemberId()).isEqualTo(save.getMemberId());
@@ -35,7 +35,7 @@ class MemberRepositoryTest {
 
         Member member = Member.builder()
                 .memberId("abcd")
-                .memberPwd("123456")
+                .password("123456")
                 .build();
         memberRepository.save(member);
         Optional<Member> findMember = memberRepository.findByMemberId(member.getMemberId());

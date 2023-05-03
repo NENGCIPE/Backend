@@ -11,6 +11,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,7 +22,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Optional;
-
+@Slf4j
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     private final MemberRepository memberRepository;
     private final JwtUtil jwtUtil;
@@ -33,7 +34,6 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     }
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-        System.out.println("인증");
         String jwt = request.getHeader("Authorization");
         //jwt가 없거나 Bearer로 시작하지 않으면 거부
         if (jwt == null || !jwt.startsWith("Bearer")) {
@@ -45,6 +45,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         String memberId = jwtUtil.getMemberId(token);
         //만료 여부 체크
         if (jwtUtil.isExpired(token)) {
+            log.info("id : {} 토큰 만료", memberId);
             chain.doFilter(request, response);
             return;
         }
@@ -56,6 +57,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             response.setCharacterEncoding("utf-8");
+            log.info("id : {} 해당 유저가 없습니다.", memberId);
             ResultResponse res = ResultResponse.builder()
                     .code(HttpServletResponse.SC_NOT_FOUND)
                     .message("해당 유저를 찾지 못했습니다.")
@@ -73,6 +75,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         PrincipalDetails principalDetails = new PrincipalDetails(member.get());
         Authentication authentication = new UsernamePasswordAuthenticationToken(principalDetails, null, principalDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        log.info("id : {} 접근 권한이 존재합니다.", memberId);
         chain.doFilter(request, response);
     }
 

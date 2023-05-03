@@ -3,6 +3,7 @@ package Nengcipe.NengcipeBackend.exception;
 import Nengcipe.NengcipeBackend.domain.ResultResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.List;
 
 @RestControllerAdvice
+@Slf4j
 public class CustomExceptionManager {
     ObjectMapper mapper = new ObjectMapper();
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -26,7 +28,6 @@ public class CustomExceptionManager {
         ResultResponse res = ResultResponse.builder()
                 .code(HttpStatus.BAD_REQUEST.value())
                 .message(bindingResult.getAllErrors().get(0).getDefaultMessage())
-                .result(ex.getBody())
                 .build();
 
         return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
