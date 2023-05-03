@@ -13,3 +13,9 @@
 #### 팀원들과 논의하여 결정할 것.
 1. FK가 너무 많아서 융통성있게 줄여야 할 듯하다.
 2. recipies_name / ingredient_name 넣?말? id만으로 구분하면 안넣어도 된다.
+
+
+### [data table schema 수정] 23년 5월 3일
+   name 추가
+   user->member 변경
+   API적인 고민 & 레시피, 유저 레시피, 재료 간의 관계에 대한 고민을 하다 보니까 추가된 점이 꽤 있다.
