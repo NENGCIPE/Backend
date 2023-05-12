@@ -1,14 +1,14 @@
 package Nengcipe.NengcipeBackend.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Builder
@@ -25,4 +25,10 @@ public class Member {
     private String memberId;
     @NotNull(message = "비밀번호는  필수 값입니다.")
     private String password;
+    @OneToMany(mappedBy = "member")
+    private List<Ingredient> ingredientList = new ArrayList<>();
+    @OneToMany(mappedBy = "member")
+    private List<MemberRecipe> memberRecipeList = new ArrayList<>();
+
+
 }

@@ -1,5 +1,6 @@
 package Nengcipe.NengcipeBackend.service;
 
+import Nengcipe.NengcipeBackend.domain.Ingredient;
 import Nengcipe.NengcipeBackend.domain.Member;
 import Nengcipe.NengcipeBackend.domain.MemberDto;
 import Nengcipe.NengcipeBackend.domain.MemberResponseDto;
