@@ -1,14 +1,17 @@
 package Nengcipe.NengcipeBackend.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
 
 @Entity
 @Getter
-@Setter
+@NoArgsConstructor
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,7 +19,12 @@ public class Category {
     private Long id;
     private String categoryName;
     @OneToMany(mappedBy = "category")
+    @JsonIgnore
     private List<Ingredient> ingredientList;
+    @Builder
+    public Category(String categoryName) {
+        this.categoryName=categoryName;
+    }
 
 
 }

@@ -1,5 +1,6 @@
-package Nengcipe.NengcipeBackend.domain;
+package Nengcipe.NengcipeBackend.dto;
 
+import Nengcipe.NengcipeBackend.domain.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

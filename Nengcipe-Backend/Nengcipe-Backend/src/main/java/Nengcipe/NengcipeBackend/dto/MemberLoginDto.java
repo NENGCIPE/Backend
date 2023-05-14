@@ -1,4 +1,4 @@
-package Nengcipe.NengcipeBackend.domain;
+package Nengcipe.NengcipeBackend.dto;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

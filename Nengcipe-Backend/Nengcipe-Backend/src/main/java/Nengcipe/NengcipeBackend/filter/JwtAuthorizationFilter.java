@@ -1,9 +1,10 @@
 package Nengcipe.NengcipeBackend.filter;
 
 import Nengcipe.NengcipeBackend.domain.Member;
-import Nengcipe.NengcipeBackend.domain.MemberDto;
+import Nengcipe.NengcipeBackend.dto.MemberDto;
 import Nengcipe.NengcipeBackend.domain.PrincipalDetails;
-import Nengcipe.NengcipeBackend.domain.ResultResponse;
+import Nengcipe.NengcipeBackend.dto.MemberResponseDto;
+import Nengcipe.NengcipeBackend.dto.ResultResponse;
 import Nengcipe.NengcipeBackend.repository.MemberRepository;
 import Nengcipe.NengcipeBackend.util.JwtUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -53,15 +54,15 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         Optional<Member> member = memberRepository.findByMemberId(memberId);
         //만약 해당 유저가 없다면 에러 JSON 반환
         if (member.isEmpty()) {
-            MemberDto memberDto = MemberDto.builder().memberId(memberId).build();
+            MemberResponseDto responseDto = MemberResponseDto.builder().memberId(memberId).build();
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             response.setCharacterEncoding("utf-8");
             log.info("id : {} 해당 유저가 없습니다.", memberId);
             ResultResponse res = ResultResponse.builder()
                     .code(HttpServletResponse.SC_NOT_FOUND)
-                    .message("해당 유저를 찾지 못했습니다.")
-                    .result(memberDto).build();
+                    .message("유저 아이디 : 찾지 못 함")
+                    .result(responseDto).build();
             try {
                 ObjectMapper objectMapper = new ObjectMapper();
                 String s = objectMapper.writeValueAsString(res);
@@ -76,6 +77,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         Authentication authentication = new UsernamePasswordAuthenticationToken(principalDetails, null, principalDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
         log.info("id : {} 접근 권한이 존재합니다.", memberId);
+        request.setAttribute("token", token);
         chain.doFilter(request, response);
     }
 
