@@ -19,6 +19,10 @@ public class JwtUtil {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token)
                 .getBody().get("memberId", String.class);
     }
+    public Long getId(String token) {
+        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token)
+                .getBody().get("id", Long.class);
+    }
 
     public boolean isExpired(String token) {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token)

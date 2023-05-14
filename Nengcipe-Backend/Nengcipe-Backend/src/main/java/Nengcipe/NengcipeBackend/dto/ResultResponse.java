@@ -1,4 +1,4 @@
-package Nengcipe.NengcipeBackend.domain;
+package Nengcipe.NengcipeBackend.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

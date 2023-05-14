@@ -1,6 +1,5 @@
 package Nengcipe.NengcipeBackend.domain;
 
-import Nengcipe.NengcipeBackend.exception.MemberNotFoundException;
 import Nengcipe.NengcipeBackend.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

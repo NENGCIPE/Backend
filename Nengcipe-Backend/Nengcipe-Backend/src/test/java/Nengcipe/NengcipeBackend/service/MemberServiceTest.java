@@ -1,8 +1,7 @@
 package Nengcipe.NengcipeBackend.service;
 
-import Nengcipe.NengcipeBackend.domain.Ingredient;
 import Nengcipe.NengcipeBackend.domain.Member;
-import Nengcipe.NengcipeBackend.domain.MemberDto;
+import Nengcipe.NengcipeBackend.dto.MemberDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

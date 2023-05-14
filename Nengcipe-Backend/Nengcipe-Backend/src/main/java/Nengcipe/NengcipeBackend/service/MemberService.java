@@ -1,12 +1,9 @@
 package Nengcipe.NengcipeBackend.service;
 
-import Nengcipe.NengcipeBackend.domain.Ingredient;
 import Nengcipe.NengcipeBackend.domain.Member;
-import Nengcipe.NengcipeBackend.domain.MemberDto;
-import Nengcipe.NengcipeBackend.domain.MemberResponseDto;
-import Nengcipe.NengcipeBackend.exception.DuplicatedMemberIdException;
-import Nengcipe.NengcipeBackend.exception.MemberNotFoundException;
-import Nengcipe.NengcipeBackend.exception.MemberPwdException;
+import Nengcipe.NengcipeBackend.dto.MemberDto;
+import Nengcipe.NengcipeBackend.dto.MemberResponseDto;
+import Nengcipe.NengcipeBackend.exception.*;
 import Nengcipe.NengcipeBackend.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -25,7 +22,7 @@ public class MemberService {
         Optional<Member> findMember = memberRepository.findByMemberId(memberDto.getMemberId());
         if (findMember.isPresent()) {
             MemberResponseDto memberReq = MemberResponseDto.of(findMember.get());
-            throw new DuplicatedMemberIdException("아이디가 중복됩니다.", memberReq);
+            throw new DuplicationException("유저 아이디", memberReq);
 
         }
         memberDto.setPassword(encoder.encode(memberDto.getPassword()));
@@ -34,21 +31,39 @@ public class MemberService {
         return memberRepository.save(member);
     }
 
-    public Member findByMemberId(String memberId) throws MemberNotFoundException {
+    public Member deleteMember(Long id) throws NotFoundException {
+        Optional<Member> findMember = memberRepository.findById(id);
+        if (findMember.isEmpty()) {
+            MemberResponseDto memberReq = MemberResponseDto.of(findMember.get());
+            throw new NotFoundException("유저 아이디", memberReq);
+        }
+        memberRepository.delete(findMember.get());
+        return findMember.get();
+    }
+
+    public Member findByMemberId(String memberId) throws NotFoundException {
         Optional<Member> findMember = memberRepository.findByMemberId(memberId);
         if (findMember.isEmpty()) {
             MemberResponseDto memberReq = MemberResponseDto.of(findMember.get());
-            throw new MemberNotFoundException("해당 유저를 찾을 수가 없습니다.", memberReq);
+            throw new NotFoundException("유저 아이디", memberReq);
+        }
+        return findMember.get();
+    }
+    public Member findById(Long id) throws NotFoundException {
+        Optional<Member> findMember = memberRepository.findById(id);
+        if (findMember.isEmpty()) {
+            MemberResponseDto memberReq = MemberResponseDto.of(findMember.get());
+            throw new NotFoundException("유저 아이디", memberReq);
         }
         return findMember.get();
     }
 
-    public String login(String memberId, String memberPwd) throws MemberNotFoundException {
+    public String login(String memberId, String memberPwd) throws NotFoundException {
         Optional<Member> findMember = memberRepository.findByMemberId(memberId);
         if (findMember.isEmpty()) {
             MemberResponseDto memberReq = MemberResponseDto.builder()
                     .memberId(memberId).build();
-            throw new MemberNotFoundException("해당 유저를 찾을 수가 없습니다.", memberReq);
+            throw new NotFoundException("유저 아이디", memberReq);
         }
         Member member = findMember.get();
         if (encoder.matches(memberPwd, member.getPassword())) {
