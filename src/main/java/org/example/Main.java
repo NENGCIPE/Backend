@@ -18,57 +18,52 @@ public class Main {
             String url = "https://www.10000recipe.com/recipe/" + page;
 
             try {
-                Document doc = Jsoup.connect(url).get(); // URL의 HTML을 가져옴
+                Document doc = Jsoup.connect(url).get();
 
-                /* 레시피명 추출 */
+                /* ======= 레시피명 ============ */
                 String recipeName;
                 Elements recipeNameElements = doc.select("div.view2_summary.st3 h3");
 
                 if (!recipeNameElements.isEmpty()){
-                    // 선택자 값이 Null이 아니면 첫번째 요소인 레시피명 가져오기.
                     Element nameElement = recipeNameElements.first();
                     recipeName = nameElement.text();
                 }
                 else {
                     recipeName = "null";
                 }
-                /* sout로 레시피명 크롤링 검증 ok */
 
-                /* 레시피 재료 추출 */
                 System.out.println(recipeName);
 
+                /*  ======= 레시피 재료 ======= */
+                String ingredName = "";
+                String ingredAmount = "";
+
                 Elements ingredElement = doc.getElementsByClass("ready_ingre3");
-                        //selectFirst("div.ready_ingred3 ul");
-
-                // 레시피에 필요한 재료들은 각각이 li에 재료명과 수량이 담겨있음.
-                //Elements ingredients = ingredElement.getElementsByTag("li");
                 Elements ingredients = ingredElement.select("li");
-               // StringBuilder stuff = new StringBuilder();
-                String res = "";
 
-                /* 레시피 재료 목록 중 수량!! 부분 */
-                String spanText = "";
                 for (Element e : ingredients) {
                     Element spanTag = e.selectFirst("span");
+                    Element aTag = e.selectFirst("a[href*=viewMaterial]");
+
                     if (spanTag != null) {
-                        spanText = spanTag.text();
+                        String onclickValue = aTag.attr("onclick");
+                        String[] parts = onclickValue.split(",");
+                        String ingredText = parts[parts.length-1];
+
+                        ingredName = ingredText.substring(2, ingredText.length()-3);
+                        ingredAmount = spanTag.text();
                     }
-                    System.out.println(spanText);
                 }
-//                for (int i = 0; i < ingredients.size(); i++) {
-//                    Element spanTag = ingredients.get(i).select("span").first();
-//                    String spanText = spanTag.text();
-//                    // 긴 공백이 포함된 재료명과 계량법을 담아줌
-//                    String tmp = ingredients.get(i).text();
-//
-//                    if (spanText.length() > 0) {
-//                        res = tmp.substring(0, tmp.length() - spanText.length()-1);
-//                    } else {
-//                        res = "null";
-//                    }
-//                    System.out.println(res);
-//
-//                }
+
+                /* ========= 레시피 상세 정보  =========== */
+                Elements stepElements = doc.getElementsByClass("view_step");
+                Elements stepDivElements = stepElements.select("div[id*=stepDiv]");
+
+                for (Element e: stepDivElements) {
+                    String recipeStep = e.text();
+                    System.out.println(recipeStep);
+                }
+
 
             } catch (IOException e) {
 
