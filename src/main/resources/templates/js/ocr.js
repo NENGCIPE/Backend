@@ -14,8 +14,6 @@ $(function () {
             success:function (result) {
                 $('#resultDiv').text(result);
                 // 이미지 출력 (div에 append)
-                $('#resultImg').empty();
-                $('#resultImg').append('<img src="/images/'+fileName+'"/>');
             },
             error:function (e) {
                 alert("오류 발생" + e);
