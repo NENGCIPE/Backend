@@ -1,5 +1,7 @@
 package Backend.service;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -22,10 +24,19 @@ import org.springframework.web.multipart.MultipartFile;
 
 //프론트측에서 넘어오면 작성할 코드
 @Service
+@Component
 public class OCRService {
+
+    @Value("${ocr.url}")
+    private String apiURL;
+
+    @Value("${ocr.secretKey}")
+    private String secretKey;
+
+
     public String clovaOCRService(File file) { //clovaOCRService
-        String apiURL = "https://k71crhiy0t.apigw.ntruss.com/custom/v1/22365/66a8cbf6b4216e8b6bfdd6b743b3c571e927d9ae489a6346e01490a4186d1813/document/receipt";
-        String secretKey = "UURubUV6dmR0QW1aUG9hV0NIUGlpTEF6VFBmc1VZV2Y=";
+
+
         List<List<String>> result;
 
         try {
