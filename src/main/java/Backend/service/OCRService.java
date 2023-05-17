@@ -19,13 +19,15 @@ import java.util.UUID;
 import org.json.JSONObject;
 import org.json.JSONArray;
 import org.springframework.web.multipart.MultipartFile;
+
+//프론트측에서 넘어오면 작성할 코드
 @Service
 public class OCRService {
-    public String clovaOCRService() { //clovaOCRService
+    public String clovaOCRService(File file) { //clovaOCRService
         String apiURL = "https://k71crhiy0t.apigw.ntruss.com/custom/v1/22365/66a8cbf6b4216e8b6bfdd6b743b3c571e927d9ae489a6346e01490a4186d1813/document/receipt";
         String secretKey = "UURubUV6dmR0QW1aUG9hV0NIUGlpTEF6VFBmc1VZV2Y=";
-        String imageFile = "//C://Users//lg//Desktop//productImages//test4.jpg";
-        String result = "";
+        List<List<String>> result;
+
         try {
             URL url = new URL(apiURL);
             HttpURLConnection con = (HttpURLConnection)url.openConnection();
@@ -52,7 +54,6 @@ public class OCRService {
             con.connect();
             DataOutputStream wr = new DataOutputStream(con.getOutputStream());
             long start = System.currentTimeMillis();
-            File file = new File(imageFile);
             writeMultiPart(wr, postParams, file, boundary);
             wr.close();
 
@@ -70,85 +71,18 @@ public class OCRService {
             }
             br.close();
 
-            //System.out.println("gi");
             System.out.println(response); // API 호출 결과를 콘솔에 출력
             // jsonToString() 메소드 호출하고 결과 받아옴
             result = jsonToString(response.toString());
             System.out.println(result);
 
         } catch (Exception e) {
-            System.out.println("Hi");
+            System.out.println("서비스에러");
             System.out.println(e);
 
         }
-        return result;
+        return null;
     }
-//프론트측에서 넘어오면 작성할 코드
-//@Service
-//public class OCRService {
-//    public String clovaOCRService(MultipartFile imgfile) { //clovaOCRService
-//        String apiURL = "https://k71crhiy0t.apigw.ntruss.com/custom/v1/22365/66a8cbf6b4216e8b6bfdd6b743b3c571e927d9ae489a6346e01490a4186d1813/document/receipt";
-//        String secretKey = "UURubUV6dmR0QW1aUG9hV0NIUGlpTEF6VFBmc1VZV2Y=";
-//        //String imageFile = filePathName;
-//        String result = "";
-//        try {
-//            URL url = new URL(apiURL);
-//            HttpURLConnection con = (HttpURLConnection)url.openConnection();
-//            con.setUseCaches(false);
-//            con.setDoInput(true);
-//            con.setDoOutput(true);
-//            con.setReadTimeout(30000);
-//            con.setRequestMethod("POST");
-//            String boundary = "----" + UUID.randomUUID().toString().replaceAll("-", "");
-//            con.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
-//            con.setRequestProperty("X-OCR-SECRET", secretKey);
-//            JSONObject json = new JSONObject();
-//            json.put("version", "V2");
-//            json.put("requestId", UUID.randomUUID().toString());
-//            json.put("timestamp", System.currentTimeMillis());
-//            JSONObject image = new JSONObject();
-//            image.put("format", "jpg");
-//            image.put("name", "demo");
-//            JSONArray images = new JSONArray();
-//            images.put(image);
-//            json.put("images", images);
-//            String postParams = json.toString();
-//
-//            con.connect();
-//            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-//            long start = System.currentTimeMillis();
-//            File file = new File(imgfile.getOriginalFilename());
-//            imgfile.transferTo(file);
-//            writeMultiPart(wr, postParams, file, boundary);
-//            wr.close();
-//
-//            int responseCode = con.getResponseCode();
-//            BufferedReader br;
-//            if (responseCode == 200) {
-//                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-//            } else {
-//                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
-//            }
-//            String inputLine;
-//            StringBuffer response = new StringBuffer();
-//            while ((inputLine = br.readLine()) != null) {
-//                response.append(inputLine);
-//            }
-//            br.close();
-//
-//            //System.out.println("gi");
-//            System.out.println(response); // API 호출 결과를 콘솔에 출력
-//            // jsonToString() 메소드 호출하고 결과 받아옴
-//            result = jsonToString(response.toString());
-//            System.out.println(result);
-//
-//        } catch (Exception e) {
-//            System.out.println("Hi");
-//            System.out.println(e);
-//
-//        }
-//        return result;
-//    }
     private static void writeMultiPart(OutputStream out, String jsonMessage, File file, String boundary) throws
         IOException {
         StringBuilder sb = new StringBuilder();
@@ -184,7 +118,7 @@ public class OCRService {
         out.flush();
     }
 
-    public String jsonToString(String jsonResultStr) {
+    public List<List<String>> jsonToString(String jsonResultStr) {
         String result = "";
 
         List<List<String>> mainResult = new ArrayList<>();
@@ -214,9 +148,10 @@ public class OCRService {
             System.out.println(mainResult);
         //[[생삼겹살, 25], [맥주, 4], [음료수, 4], [밥+된장, 13]]
 
-        return result;
+        return mainResult;
     }
 }
+
 
 
 
