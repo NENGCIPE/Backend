@@ -1,0 +1,28 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>OCR</title>
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+  <script src="/js/ocr.js"></script>
+</head>
+<body>
+<!--  파일 업로드 -->
+<h3>OCR : 텍스트 추출</h3>
+<form id="ocrForm" enctype="multipart/form-data" action="http://localhost:8080/clovaOCR">
+  파일 : <input type="file" id="uploadFile" name="uploadFile">
+  <input type="submit" value="결과 확인">
+</form>
+<br><br>
+
+<!-- 결과 출력 (텍스트) -->
+<h3>OCR : 텍스트 추출 결과</h3>
+<div id="resultDiv"></div>
+<br><br>
+
+
+</html>
+
