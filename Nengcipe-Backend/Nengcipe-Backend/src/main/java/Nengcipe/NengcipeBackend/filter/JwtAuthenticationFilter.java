@@ -1,5 +1,6 @@
 package Nengcipe.NengcipeBackend.filter;
 
+import Nengcipe.NengcipeBackend.auth.PrincipalDetails;
 import Nengcipe.NengcipeBackend.domain.*;
 import Nengcipe.NengcipeBackend.dto.JwtResponse;
 import Nengcipe.NengcipeBackend.dto.MemberDto;
