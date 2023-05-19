@@ -2,11 +2,8 @@ package Nengcipe.NengcipeBackend.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.transaction.Transactional;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -24,7 +21,6 @@ public class Ingredient {
     @JsonIgnore
     private Member member;
     @ManyToOne
-    @JsonIgnore
     private Category category;
 //    @OneToMany(mappedBy = "ingredient", fetch = FetchType.LAZY)
 //    private List<IngredientRecipe> ingredientRecipeList = new ArrayList<>();
