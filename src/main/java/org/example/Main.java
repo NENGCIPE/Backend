@@ -10,6 +10,7 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
+
         int startPage = 6999000; // 시작 페이지
         int endPage =6999010; // 종료 페이지
 
@@ -32,11 +33,13 @@ public class Main {
                     recipeName = "null";
                 }
 
-                System.out.println(recipeName);
+               // System.out.println(recipeName);
 
                 /*  ======= 레시피 재료 ======= */
                 String ingredName = "";
                 String ingredAmount = "";
+                StringBuilder sb = new StringBuilder();
+
 
                 Elements ingredElement = doc.getElementsByClass("ready_ingre3");
                 Elements ingredients = ingredElement.select("li");
@@ -52,8 +55,12 @@ public class Main {
 
                         ingredName = ingredText.substring(2, ingredText.length()-3);
                         ingredAmount = spanTag.text();
+                        sb.append(ingredName);
+                        sb.append(ingredAmount);
+
                     }
                 }
+                System.out.println(sb.toString());
 
                 /* ========= 레시피 상세 정보  =========== */
                 Elements stepElements = doc.getElementsByClass("view_step");
@@ -61,13 +68,25 @@ public class Main {
 
                 for (Element e: stepDivElements) {
                     String recipeStep = e.text();
-                    System.out.println(recipeStep);
+                   //  System.out.println(recipeStep);
                 }
 
+                /* ========= 레시피 이미지  =========== */
+                Elements imgElements = doc.getElementsByClass("centeredcrop");
+                Elements recipeImg = imgElements.select("img");
+                String imgUrl;
+
+                if (!recipeImg.isEmpty()) {
+                    Element imgElement = recipeImg.first();
+                    imgUrl = imgElement.attr("src");
+                } else {
+                    imgUrl = "null";
+                }
+
+             //  System.out.println(imgUrl);
 
             } catch (IOException e) {
-
-                System.out.println("뭐");
+                System.out.println("plz");
             }
 
         }
