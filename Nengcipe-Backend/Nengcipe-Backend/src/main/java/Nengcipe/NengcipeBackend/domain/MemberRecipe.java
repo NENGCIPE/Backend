@@ -15,6 +15,10 @@ public class MemberRecipe {
     @ManyToOne
     private Recipe recipe;
 
+//    //true = 스크랩 o , false = 스크랩 x
+//    @Column(nullable = false)
+//    private boolean status;
+
     @Builder
     public MemberRecipe(Member member, Recipe recipe) {
         this.member=member;
@@ -22,4 +26,5 @@ public class MemberRecipe {
         member.getMemberRecipeList().add(this);
         recipe.getMemberRecipeList().add(this);
     }
+
 }
