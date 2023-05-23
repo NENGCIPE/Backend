@@ -17,9 +17,6 @@ public class MemberRecipe {
     @ManyToOne
     private Recipe recipe;
 
-//    //true = 스크랩 o , false = 스크랩 x
-//    @Column(nullable = false)
-//    private boolean status;
 
     @Builder(builderClassName = "MemberRecipe" , builderMethodName = "memberRecipe")
     public MemberRecipe(Member member, Recipe recipe) {

@@ -14,6 +14,7 @@ import Nengcipe.NengcipeBackend.service.RecipeService;
 import Nengcipe.NengcipeBackend.util.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,20 +30,20 @@ public class MemberRecipeController {
 
 
     /**
-     *  API : [POST] 레시피 스크랩 API
+     * API : [POST] 레시피 스크랩 API
      * @param memberRecipeRequestDto
      * @param request
      * @return
      * @throws NotFoundException
-     * @uri api/recipes/scrap?recipe_id=1
+     * @uri api/recipes/scrap
      */
     @PostMapping("/scrap")
-    public ResponseEntity<Object> scrapRecipe(@RequestBody MemberRecipeRequestDto memberRecipeRequestDto, HttpServletRequest request) throws NotFoundException  {
+    public ResponseEntity<Object> scrapRecipe(@RequestBody MemberRecipeRequestDto memberRecipeRequestDto, HttpServletRequest request) throws NotFoundException {
         ResultResponse res;
-        try{
+        try {
             String token = (String) request.getAttribute("token");
-            Long id = jwtUtil.getId(token);
-            Member member = memberService.findById(id);
+            Long member_id = jwtUtil.getId(token);
+            Member member = memberService.findById(member_id);
             Recipe recipe = recipeService.findRecipeById(memberRecipeRequestDto.getRecipeId());
             MemberRecipe memberRecipe = memberRecipeService.createScrapRecipe(member, recipe);
             MemberRecipeResponseDto response = MemberRecipeResponseDto.of(memberRecipe);
@@ -64,16 +65,81 @@ public class MemberRecipeController {
                     .build();
         }
 
-        return new ResponseEntity<>(res,HttpStatus.CREATED);
+        return new ResponseEntity<>(res, HttpStatus.CREATED);
     }
 
-//    /**
-//     * API : [GET] 레시피 스크랩 목록 API
-//     * @uri api/recipes/scrap
-//     */
-//    @GetMapping("/scrap")
-//    public ResponseEntity<ResultResponse> getScrapRecipe(HttpServletRequest request) throws NotFoundException) {
-//
-//    }
+    /**
+     * API : [GET] 레시피 스크랩 목록 API
+     * @param request
+     * @return
+     * @throws NotFoundException
+     * @uri api/recipes/scrapList
+     */
 
+    @GetMapping("/scrapList")
+    public ResponseEntity<ResultResponse> getScrapRecipe(HttpServletRequest request) throws NotFoundException {
+        ResultResponse res;
+        try {
+            String token = (String) request.getAttribute("token");
+            Long member_id = jwtUtil.getId(token);
+            Member member = memberService.findById(member_id);
+
+            res = ResultResponse.builder()
+                    .code(HttpStatus.OK.value())
+                    .message("레시피 스크랩 목록 성공")
+                    .result(member.getMemberRecipeList())
+                    .build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("컨트롤러 에러");
+
+            res = ResultResponse.builder()
+                    .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                    .message("서버 에러 발생.")
+                    .result(null)
+                    .build();
+        }
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+    /**
+     * API : [Delete] 레시피 스크랩 삭제 API
+     *
+     * @param memberRecipeRequestDto
+     * @param request
+     * @return
+     * @throws NotFoundException
+     * @uri api/recipes/scrapOut
+     */
+    @DeleteMapping("/scrapOut")
+    public ResponseEntity<ResultResponse> deleteScrapRecipe(@RequestBody MemberRecipeRequestDto memberRecipeRequestDto, HttpServletRequest request) throws NotFoundException {
+        ResultResponse res;
+        try {
+            String token = (String) request.getAttribute("token");
+            Long member_id = jwtUtil.getId(token);
+            Member member = memberService.findById(member_id);
+            Recipe recipe = recipeService.findRecipeById(memberRecipeRequestDto.getRecipeId());
+
+            MemberRecipe memberRecipe = memberRecipeService.deleteScrapRecipe(member, recipe);
+            MemberRecipeResponseDto response = MemberRecipeResponseDto.of(memberRecipe);
+
+            res = ResultResponse.builder()
+                    .code(HttpStatus.OK.value())
+                    .message("레시피 스크랩삭제 성공")
+                    .result(response)
+                    .build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("컨트롤러 에러");
+
+            res = ResultResponse.builder()
+                    .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                    .message("서버 에러 발생.")
+                    .result(null)
+                    .build();
+        }
+
+        return new ResponseEntity<>(res, HttpStatus.OK);
+
+    }
 }

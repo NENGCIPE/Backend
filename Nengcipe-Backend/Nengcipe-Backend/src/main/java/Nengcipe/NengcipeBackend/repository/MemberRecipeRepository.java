@@ -1,5 +1,6 @@
 package Nengcipe.NengcipeBackend.repository;
 
+import Nengcipe.NengcipeBackend.domain.Ingredient;
 import Nengcipe.NengcipeBackend.domain.Member;
 import Nengcipe.NengcipeBackend.domain.MemberRecipe;
 import Nengcipe.NengcipeBackend.domain.Recipe;
@@ -13,6 +14,7 @@ import java.util.Optional;
 
 @Repository
 public interface MemberRecipeRepository extends JpaRepository<MemberRecipe, Long> {
+    Optional<MemberRecipe> findByMemberAndRecipe(Member member, Recipe recipe);
 }
 
 

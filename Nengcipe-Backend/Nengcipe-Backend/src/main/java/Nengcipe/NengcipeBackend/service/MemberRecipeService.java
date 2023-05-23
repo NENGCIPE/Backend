@@ -4,6 +4,7 @@ import Nengcipe.NengcipeBackend.domain.Member;
 import Nengcipe.NengcipeBackend.domain.MemberRecipe;
 import Nengcipe.NengcipeBackend.domain.Recipe;
 import Nengcipe.NengcipeBackend.dto.MemberRecipeRequestDto;
+import Nengcipe.NengcipeBackend.exception.NotFoundException;
 import Nengcipe.NengcipeBackend.repository.MemberRecipeRepository;
 import Nengcipe.NengcipeBackend.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -38,17 +39,21 @@ public class MemberRecipeService {
     }
 
 
+    /**
+     * API : [DELETE] 레시피 스크랩 삭제 API
+     * @param member
+     * @param recipe
+     * @return
+     * @throws NotFoundException
+     */
+    public MemberRecipe deleteScrapRecipe(Member member, Recipe recipe) throws NotFoundException {
+        Optional<MemberRecipe> delMemberRecipe = memberRecipeRepository.findByMemberAndRecipe(member, recipe);
+        memberRecipeRepository.delete(delMemberRecipe.get());
+        return delMemberRecipe.get();
 
-//    //GET기능
-//    public String getScrapRecipe() {
-//        List<MemberRecipe> memberRecipeList = new ArrayList<>(this.memberRecipeRepository.findAll());
-//        return "스크랩 리스트 가져오기 성공";
-//    }
-//
-//    //DELETE 기능
-//    public String deleteScrapRecipe(){
-//        return "스크랩 취소 성공"
-//    }
+
+
+    }
 
 
 
