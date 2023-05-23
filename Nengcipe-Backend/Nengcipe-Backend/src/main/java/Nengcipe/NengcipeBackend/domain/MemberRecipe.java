@@ -3,9 +3,11 @@ package Nengcipe.NengcipeBackend.domain;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@NoArgsConstructor
 public class MemberRecipe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +21,7 @@ public class MemberRecipe {
 //    @Column(nullable = false)
 //    private boolean status;
 
-    @Builder
+    @Builder(builderClassName = "MemberRecipe" , builderMethodName = "memberRecipe")
     public MemberRecipe(Member member, Recipe recipe) {
         this.member=member;
         this.recipe=recipe;
