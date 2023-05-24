@@ -30,7 +30,7 @@ public class MemberRecipeService {
      * @return newMemberRecipe
      */
     public MemberRecipe createScrapRecipe(Member member, Recipe recipe){
-        MemberRecipe newMemberRecipe = MemberRecipe.memberRecipe()
+        MemberRecipe newMemberRecipe = MemberRecipe.myMemberRecipe()
                 .member(member) //member_id에 해당하는 member 객체 (jwt)
                 .recipe(recipe) //recipe_id에 해당하는 recipe 객체 (findbyid)
                 .build();

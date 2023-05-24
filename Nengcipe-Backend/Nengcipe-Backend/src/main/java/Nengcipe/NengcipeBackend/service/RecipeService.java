@@ -16,7 +16,7 @@ public class RecipeService {
 
 
     public Recipe findRecipeById(Long id) throws NotFoundException {
-        Optional<Recipe> recipe = recipeRepository.findByRecipeId(id);
+        Optional<Recipe> recipe = recipeRepository.findById(id);
         /** recipe를 찾지 못한다면, NotFoundException 발생 **/
         if (recipe.isEmpty()) {
             throw new NotFoundException("레시피", null);

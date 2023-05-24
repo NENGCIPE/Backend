@@ -1,15 +1,12 @@
 package Nengcipe.NengcipeBackend.dto;
 
 import Nengcipe.NengcipeBackend.domain.MemberRecipe;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
 @Builder
 @NoArgsConstructor
-
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class MemberRecipeResponseDto {
     private Long id;
     private Long memberId;

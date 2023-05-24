@@ -17,13 +17,13 @@ public class MemberRecipe {
     @ManyToOne
     private Recipe recipe;
 
-
-    @Builder(builderClassName = "MemberRecipe" , builderMethodName = "memberRecipe")
+    @Builder(builderClassName = "MyMemberRecipe" , builderMethodName = "myMemberRecipe")
     public MemberRecipe(Member member, Recipe recipe) {
         this.member=member;
         this.recipe=recipe;
         member.getMemberRecipeList().add(this);
         recipe.getMemberRecipeList().add(this);
     }
+
 
 }
