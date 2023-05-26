@@ -8,6 +8,7 @@ import Nengcipe.NengcipeBackend.dto.MemberRecipeRequestDto;
 import Nengcipe.NengcipeBackend.dto.MemberRecipeResponseDto;
 import Nengcipe.NengcipeBackend.dto.ResultResponse;
 import Nengcipe.NengcipeBackend.exception.NotFoundException;
+import Nengcipe.NengcipeBackend.repository.MemberRecipeRepository;
 import Nengcipe.NengcipeBackend.service.MemberRecipeService;
 import Nengcipe.NengcipeBackend.service.MemberService;
 import Nengcipe.NengcipeBackend.service.RecipeService;
@@ -19,6 +20,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("api/recipes")
 @RequiredArgsConstructor
@@ -27,6 +30,7 @@ public class MemberRecipeController {
     private final JwtUtil jwtUtil;
     private final MemberRecipeService memberRecipeService;
     private final RecipeService recipeService;
+    private final MemberRecipeRepository memberRecipeRepository;
 
 
     /**
@@ -45,7 +49,20 @@ public class MemberRecipeController {
             Long member_id = jwtUtil.getId(token);
             Member member = memberService.findById(member_id);
             Recipe recipe = recipeService.findRecipeById(memberRecipeRequestDto.getRecipeId());
-            MemberRecipe memberRecipe = memberRecipeService.createScrapRecipe(member, recipe);
+
+            Optional<MemberRecipe> find = memberRecipeRepository.findByMemberAndRecipe(member, recipe);
+            if (find.isPresent()){
+                ResultResponse errRes;
+                errRes = ResultResponse.builder()
+                        .code(HttpStatus.CONFLICT.value())
+                        .message("이미 스크랩된 레시피입니다.")
+                        .result(find.get().getRecipe().getId())
+                        .build();
+
+                return new ResponseEntity<>(errRes, HttpStatus.CONFLICT);
+            }
+
+            MemberRecipe memberRecipe = memberRecipeService.createScrapRecipe(memberRecipeRequestDto,member, recipe);
             MemberRecipeResponseDto response = MemberRecipeResponseDto.of(memberRecipe);
 
             res = ResultResponse.builder()
