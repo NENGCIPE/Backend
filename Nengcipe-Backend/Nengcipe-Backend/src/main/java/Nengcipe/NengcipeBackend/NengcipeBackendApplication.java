@@ -1,5 +1,6 @@
 package Nengcipe.NengcipeBackend;
 
+import Nengcipe.NengcipeBackend.domain.Recipe;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.PropertySource;

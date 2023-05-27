@@ -22,6 +22,5 @@ public class IngredientResponseDto {
                 .ingredName(ingredient.getIngredName())
                 .quantity(ingredient.getQuantity())
                 .categoryName(ingredient.getCategory().getCategoryName()).build();
-
     }
 }
