@@ -94,16 +94,13 @@ public class CrawlingRecipeService {
                     imgUrl = "null";
                 }
 
-                // Recipe Entity 세팅하고 db에 올리기 @Builder
-                Recipe recipe = new Recipe(recipeName, recipeDetails, recipeIngredName, recipeIngredAmount, imgUrl);
-
-                /*
-                recipe.setRecipeName(recipeName);
-                recipe.setRecipeDetail(recipeDetails);
-                recipe.setRecipeIngredName(String.valueOf(recipeIngredName));
-                recipe.setRecipeIngredAmount(String.valueOf(recipeIngredAmount));
-                recipe.setImgUrl(imgUrl);
-                */
+                // Recipe Entity 세팅하고 db에 올리기
+                // Setter 대신 Builder 사용
+                Recipe recipe = Recipe.builder()
+                                .recipeName(recipeName).recipeDetail(recipeDetails)
+                                .recipeIngredName(recipeIngredName).recipeIngredAmount(recipeIngredAmount)
+                                .imgUrl(imgUrl)
+                                .build();
 
                 recipeRepository.save(recipe);
                 // saveall..

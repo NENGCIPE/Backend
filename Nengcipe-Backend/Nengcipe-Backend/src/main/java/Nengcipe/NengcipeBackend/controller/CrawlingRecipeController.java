@@ -1,21 +1,21 @@
 package Nengcipe.NengcipeBackend.controller;
 
-import Nengcipe.NengcipeBackend.domain.Ingredient;
-import Nengcipe.NengcipeBackend.domain.Recipe;
+import Nengcipe.NengcipeBackend.dto.ResultResponse;
+import Nengcipe.NengcipeBackend.exception.NotFoundException;
 import Nengcipe.NengcipeBackend.service.CrawlingRecipeService;
 import Nengcipe.NengcipeBackend.service.RecipeService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/recipe")
+@RequestMapping("/api/recipes")
 @RequiredArgsConstructor
 public class CrawlingRecipeController {
 
@@ -30,9 +30,13 @@ public class CrawlingRecipeController {
     }
 */
 
-/*
     @GetMapping("/all")
-    public ResponseEntity<List> getRecipeByIngredient(@RequestParam List<String> ingredientNames) {
+    public ResponseEntity<ResultResponse> getMatchingRecipes(HttpServletRequest request) throws NotFoundException {
+        ResultResponse res = ResultResponse.builder()
+                .code(HttpStatus.OK.value())
+                .message("레시피 목록 로드 성공.")
+                .result(recipeService.findMatchingRecipes()).build();
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
-*/
+
 }
