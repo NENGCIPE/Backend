@@ -25,14 +25,13 @@ public class RecipeService {
 
         List<Ingredient> ingredients = ingredientRepository.findAllByIngredNameIsNotNull();
         List<String> recipeIngredients = recipeRepository.findAllByrecipeIngredNameIsNotNull();
-
         List<Recipe> matchingRecipes = new ArrayList<>();
 
         for (String recipeIngredient : recipeIngredients) {
             for (Ingredient ingredient : ingredients) {
                 if (recipeIngredient.equals(ingredient.getIngredName())) {
-                    matchingRecipes.add(ingredient.getRecipe());
-                    break;
+                    List<Recipe> recipes = recipeRepository.findAll();
+                    matchingRecipes.addAll(recipes);
                 }
             }
         }
