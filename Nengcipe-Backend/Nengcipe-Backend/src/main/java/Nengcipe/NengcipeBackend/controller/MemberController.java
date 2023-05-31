@@ -60,12 +60,12 @@ public class MemberController {
         String token = (String) request.getAttribute("token");
         Long id = jwtUtil.getId(token); //멤버 PK 가져옴
         Member member = memberService.findById(id);
+
         ResultResponse res = ResultResponse.builder()
                 .code(HttpStatus.OK.value())
                 .message("내 냉장고 정보 가져오기 성공.")
                 .result(member.getIngredientList()).build();
         return new ResponseEntity<>(res, HttpStatus.OK);
-
     }
 
     @PostMapping("/fridge")
@@ -75,6 +75,7 @@ public class MemberController {
         String token = (String) request.getAttribute("token");
         Long id = jwtUtil.getId(token); //멤버 PK 가져옴
         Member member = memberService.findById(id);
+
         Category category = categoryService.findCategoryByName(ingredientDto.getCategoryName());
         Ingredient ingredient = ingredientService.registerIngredient(ingredientDto, member, category);
         log.info("name : {} 등록 완료", ingredient.getIngredName());

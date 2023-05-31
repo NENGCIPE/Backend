@@ -1,6 +1,5 @@
 package Nengcipe.NengcipeBackend.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -38,6 +37,5 @@ public class Member {
     private List<Ingredient> ingredientList = new ArrayList<>();
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<MemberRecipe> memberRecipeList = new ArrayList<>();
-
 
 }

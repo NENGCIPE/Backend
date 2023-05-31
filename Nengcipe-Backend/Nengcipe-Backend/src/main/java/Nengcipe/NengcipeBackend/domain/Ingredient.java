@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
-
 @Entity
 @Getter
 @NoArgsConstructor
@@ -14,6 +13,7 @@ public class Ingredient {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ingred_id")
     private Long id;
+
     private String ingredName;
     @Setter
     private int quantity;
@@ -22,6 +22,7 @@ public class Ingredient {
     private Member member;
     @ManyToOne
     private Category category;
+
 //    @OneToMany(mappedBy = "ingredient", fetch = FetchType.LAZY)
 //    private List<IngredientRecipe> ingredientRecipeList = new ArrayList<>();
 

@@ -12,6 +12,8 @@ configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
+
+	// implementation.exclude group: 'com.vaadin.external.google', module: 'android-json'
 }
 
 repositories {
@@ -29,7 +31,7 @@ dependencies {
 
 	// h2 db settings
 	runtimeOnly 'com.h2database:h2'
-	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+//	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 
 	runtimeOnly 'com.mysql:mysql-connector-j'
 

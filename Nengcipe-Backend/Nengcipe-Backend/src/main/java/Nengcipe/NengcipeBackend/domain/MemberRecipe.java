@@ -3,9 +3,11 @@ package Nengcipe.NengcipeBackend.domain;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@NoArgsConstructor
 public class MemberRecipe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

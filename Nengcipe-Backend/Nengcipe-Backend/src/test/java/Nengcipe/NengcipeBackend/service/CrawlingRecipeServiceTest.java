@@ -1,23 +1,24 @@
 package Nengcipe.NengcipeBackend.service;
 
-import Nengcipe.NengcipeBackend.repository.RecipeRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.TestPropertySource;
 
 @SpringBootTest
+@TestPropertySource(locations = "classpath:/application.properties")
 class CrawlingRecipeServiceTest {
+
     @Autowired
-    RecipeRepository recipeRepository;
-    @Autowired
-    CrawlingRecipeService crawlingRecipeService;
+    private CrawlingRecipeService crawlingRecipeService;
 
     @Test
     @DisplayName("DB에 올려보자.")
-    public void DBtest() {
+    @Rollback
+    public void dbTest() {
         crawlingRecipeService.crawlingRecipes();
-
 
 /*
         Recipe recipe = new Recipe();

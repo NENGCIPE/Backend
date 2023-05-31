@@ -2,32 +2,36 @@ package Nengcipe.NengcipeBackend.service;
 
 import Nengcipe.NengcipeBackend.domain.Recipe;
 import Nengcipe.NengcipeBackend.repository.RecipeRepository;
+import lombok.RequiredArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 
 @Service
+@RequiredArgsConstructor
+@Component
 public class CrawlingRecipeService {
 
     private final RecipeRepository recipeRepository;
-    public CrawlingRecipeService(RecipeRepository recipeRepository) {
-        this.recipeRepository = recipeRepository;
-    }
 
     @Transactional
     public void crawlingRecipes() {
 
+        System.out.println("start");
         // 시작 페이지와 종료 페이지 설정
         int startPage = 6999000;
         int endPage = 6999010;
 
         for (int page = startPage; page <= endPage; page++) {
             String url = "https://www.10000recipe.com/recipe/" + page;
+            System.out.println("url 업로드");
 
             try {
                 Document doc = Jsoup.connect(url).get();
@@ -43,6 +47,7 @@ public class CrawlingRecipeService {
                     recipeName = "null";
                 }
 
+                System.out.println("레시피 재료명");
                 /*  ======= 레시피 재료와 수량 추출 ======= */
                 StringBuilder recipeIngredName = new StringBuilder();
                 StringBuilder recipeIngredAmount = new StringBuilder();
@@ -60,13 +65,18 @@ public class CrawlingRecipeService {
                         String[] parts = onclickValue.split(",");
                         String ingredText = parts[parts.length - 1];
 
+
+                        if (recipeIngredName.length() > 0) {
+                            recipeIngredName.append(","); // 쉼표 추가
+                            recipeIngredAmount.append(","); // 쉼표 추가
+                        }
+
                         recipeIngredName.append(ingredText.substring(2, ingredText.length() - 3));
                         recipeIngredAmount.append(spanTag.text());
                     }
                     else {
                         recipeIngredName.append("");
                         recipeIngredAmount.append("");
-
                     }
                 }
 
@@ -94,16 +104,15 @@ public class CrawlingRecipeService {
                     imgUrl = "null";
                 }
 
-                // Recipe Entity 세팅하고 db에 올리기
-                // Setter 대신 Builder 사용
                 Recipe recipe = Recipe.builder()
                                 .recipeName(recipeName).recipeDetail(recipeDetails)
                                 .recipeIngredName(recipeIngredName).recipeIngredAmount(recipeIngredAmount)
                                 .imgUrl(imgUrl)
                                 .build();
 
+                System.out.println("end");
+
                 recipeRepository.save(recipe);
-                // saveall..
 
             } catch (IOException e) {
                 System.out.println("Error occurred while scraping recipe from URL: " + url);
@@ -111,17 +120,5 @@ public class CrawlingRecipeService {
             }
         }
     }
-
-    /*public List<Recipe> getRecipeByIngredients(List<Ingredient> ingredients) {
-        // 재료 이름 리스트 추출
-        List<String> ingredientNames = ingredients.stream()
-                .map(Ingredient::getIngredName)
-                .collect(Collectors.toList());
-
-        // 재료 이름 리스트를 기반으로 레시피 검색
-        List<Recipe> recipes = recipeRepository.findByIngredientName(ingredientNames);
-
-        return recipes;
-    }*/
 }
 

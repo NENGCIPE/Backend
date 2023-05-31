@@ -11,7 +11,6 @@ public class BeanConfig {
     public ObjectMapper objectMapper() {
         return new ObjectMapper();
     }
-
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
