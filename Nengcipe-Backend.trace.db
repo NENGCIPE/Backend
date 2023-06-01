@@ -1,3 +1,0 @@
-2023-05-31 22:30:16 jdbc[180]: exception
-org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELEMEMBER_RECIPE[*] CT * FROM RECIPE"; expected "SET, SAVEPOINT, SCRIPT, SHUTDOWN, SHOW"; SQL statement:
-SELEMEMBER_RECIPE CT * FROM RECIPE [42001-199]

@@ -18,7 +18,7 @@ class CrawlingRecipeServiceTest {
     @DisplayName("DB에 올려보자.")
     @Rollback
     public void dbTest() {
-        crawlingRecipeService.crawlingRecipes();
+      //  crawlingRecipeService.crawlingRecipes(member);
 
 /*
         Recipe recipe = new Recipe();

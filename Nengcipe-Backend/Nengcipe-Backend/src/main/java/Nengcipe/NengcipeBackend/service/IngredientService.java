@@ -24,6 +24,7 @@ public class IngredientService {
      */
     public Ingredient registerIngredient(IngredientDto ingredientDto, Member member, Category category) {
         Optional<Ingredient> find = ingredientRepository.findByIngredNameAndMember(ingredientDto.getIngredName(), member);
+        System.out.println("여기가 안돼요_service");
         //이미 존재한다면 quantity+1
         if (find.isPresent()) {
             find.get().addQuantity();

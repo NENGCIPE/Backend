@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,7 +43,7 @@ public class CrawlingRecipeController {
     }
 */
     @GetMapping("/all")
-    public ResponseEntity<ResultResponse> getMatchingRecipes(HttpServletRequest request, IngredientDto ingredientDto) throws NotFoundException {
+    public ResponseEntity<ResultResponse> getMatchingRecipes(HttpServletRequest request) throws NotFoundException {
         ResultResponse res;
         try {
             String token = (String) request.getAttribute("token");
@@ -50,14 +51,12 @@ public class CrawlingRecipeController {
             Member member = memberService.findById(member_id);
 
             /*  Recipe Crawling하기. */
-            crawlingRecipeService.crawlingRecipes();
+            crawlingRecipeService.crawlingRecipes(member);
 
             /*  Crawling 레시피와 재료 비교하여 레시피 목록 나열하기  */
-
             List<Ingredient> ingredients = member.getIngredientList();
             List<Recipe> matchingRecipes = recipeService.findMatchingRecipes(member, ingredients);
             List<MatchingRecipeResponseDto> response = new ArrayList<>();
-
 
             for (Recipe recipe : matchingRecipes) {
                 MatchingRecipeResponseDto tmp = MatchingRecipeResponseDto.of(recipe);

@@ -105,8 +105,6 @@ public class MemberController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
-
-
     @GetMapping("/auth")
     public String authPractice() {
 

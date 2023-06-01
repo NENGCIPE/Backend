@@ -23,31 +23,26 @@ public class RecipeService {
     public List<Recipe> findMatchingRecipes(Member member, List<Ingredient> ingredient) throws NotFoundException {
 
         List<Recipe> CrawlingRecipeList = recipeRepository.findAll();
-
-        /*
-        *   Optional<Ingredient> ingredNameList = ingredientRepository.findByIngredNameAndMember(member);
-        *   member.getRecipeList를 인자로 받으므로, 아래에서 for문을 돌며 각 ingredient 객체 마다 .getIngredName을 해준다.
-        */
-
        List<Recipe> matchingRecipes = new ArrayList<>();
 
         for (Recipe recipeIngredient : CrawlingRecipeList) {
             boolean flag = false;
-            for (Ingredient ingredientNameList: ingredient) {
-                StringBuilder recipeIngredNameList = recipeIngredient.getRecipeIngredName();
-                String[] values = recipeIngredNameList.toString().split(",");
-                for (String value : values) {
+            for (Ingredient ingredientNameList : ingredient) {
+                String[] ingredArr = recipeIngredient.getRecipeIngredName().toString().split(",");
+                for (String value : ingredArr) {
                     if (value.equals(ingredientNameList.getIngredName())) {
                         flag = true;
                         break;
                     }
                 }
-            }
-            if (flag == true) {
-                matchingRecipes.add(recipeIngredient);
-
+                if (flag == true) {
+                    matchingRecipes.add(recipeIngredient);
+                    break;
+                }
             }
         }
+        System.out.println(matchingRecipes);
         return matchingRecipes;
     }
 }
+

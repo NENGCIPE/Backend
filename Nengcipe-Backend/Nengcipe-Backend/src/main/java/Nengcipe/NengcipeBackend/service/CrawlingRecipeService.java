@@ -1,5 +1,6 @@
 package Nengcipe.NengcipeBackend.service;
 
+import Nengcipe.NengcipeBackend.domain.Member;
 import Nengcipe.NengcipeBackend.domain.Recipe;
 import Nengcipe.NengcipeBackend.repository.RecipeRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,7 @@ public class CrawlingRecipeService {
     private final RecipeRepository recipeRepository;
 
     @Transactional
-    public void crawlingRecipes() {
+    public void crawlingRecipes(Member member) {
 
         System.out.println("start");
         // 시작 페이지와 종료 페이지 설정
@@ -31,7 +32,6 @@ public class CrawlingRecipeService {
 
         for (int page = startPage; page <= endPage; page++) {
             String url = "https://www.10000recipe.com/recipe/" + page;
-            System.out.println("url 업로드");
 
             try {
                 Document doc = Jsoup.connect(url).get();
@@ -47,7 +47,6 @@ public class CrawlingRecipeService {
                     recipeName = "null";
                 }
 
-                System.out.println("레시피 재료명");
                 /*  ======= 레시피 재료와 수량 추출 ======= */
                 StringBuilder recipeIngredName = new StringBuilder();
                 StringBuilder recipeIngredAmount = new StringBuilder();
@@ -100,17 +99,17 @@ public class CrawlingRecipeService {
                 if (!recipeImg.isEmpty()) {
                     Element imgElement = recipeImg.first();
                     imgUrl = imgElement.attr("src");
+                    imgUrl = imgUrl.toString();
                 } else {
                     imgUrl = "null";
                 }
 
+                System.out.println(imgUrl);
                 Recipe recipe = Recipe.builder()
                                 .recipeName(recipeName).recipeDetail(recipeDetails)
                                 .recipeIngredName(recipeIngredName).recipeIngredAmount(recipeIngredAmount)
                                 .imgUrl(imgUrl)
                                 .build();
-
-                System.out.println("end");
 
                 recipeRepository.save(recipe);
 
