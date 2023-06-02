@@ -31,7 +31,7 @@ public class IngredientService {
             return find.get();
         }
         else {
-            Ingredient ingredient = Ingredient.myIngredient()
+            Ingredient ingredient = Ingredient.builder()
                     .ingredName(ingredientDto.getIngredName())
                     .quantity(ingredientDto.getQuantity())
                     .category(category)

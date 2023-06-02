@@ -25,11 +25,16 @@ public class CategoryService {
         return category;
     }
 
-    /** 재료에 등록할 카테고리 찾기. 찾지 못하면 NotFoundException 발생.  */
+    /**
+     * 재료에 등록할 카테고리 찾기.
+     * 찾지 못하면 등록하고 반환.
+     * */
     public Category findCategoryByName(String name) throws NotFoundException {
         Optional<Category> category = categoryRepository.findByCategoryName(name);
         if (category.isEmpty()) {
-            throw new NotFoundException("카테고리 이름", CategoryDto.builder().categoryName(name).build());
+            Category cate = Category.builder().categoryName(name).build();
+            categoryRepository.save(cate);
+            return cate;
         }
         return category.get();
     }

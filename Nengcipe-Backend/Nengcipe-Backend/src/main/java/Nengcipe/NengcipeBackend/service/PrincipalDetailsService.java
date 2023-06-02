@@ -1,5 +1,7 @@
-package Nengcipe.NengcipeBackend.domain;
+package Nengcipe.NengcipeBackend.service;
 
+import Nengcipe.NengcipeBackend.domain.Member;
+import Nengcipe.NengcipeBackend.auth.PrincipalDetails;
 import Nengcipe.NengcipeBackend.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

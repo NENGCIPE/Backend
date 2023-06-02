@@ -1,8 +1,7 @@
 package Nengcipe.NengcipeBackend.filter;
 
 import Nengcipe.NengcipeBackend.domain.Member;
-import Nengcipe.NengcipeBackend.dto.MemberDto;
-import Nengcipe.NengcipeBackend.domain.PrincipalDetails;
+import Nengcipe.NengcipeBackend.auth.PrincipalDetails;
 import Nengcipe.NengcipeBackend.dto.MemberResponseDto;
 import Nengcipe.NengcipeBackend.dto.ResultResponse;
 import Nengcipe.NengcipeBackend.repository.MemberRepository;
