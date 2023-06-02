@@ -47,8 +47,6 @@ public class SecurityConfig {
                 .build();
     }
 
-
-
     public class MyCustom extends AbstractHttpConfigurer<MyCustom, HttpSecurity> {
         @Override
         public void configure(HttpSecurity http) throws Exception {

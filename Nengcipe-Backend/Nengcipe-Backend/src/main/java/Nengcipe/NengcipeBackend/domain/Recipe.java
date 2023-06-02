@@ -1,5 +1,6 @@
 package Nengcipe.NengcipeBackend.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,6 +32,7 @@ public class Recipe {
     private String imgUrl;
 
     @OneToMany(mappedBy = "recipe")
+    @JsonIgnore
     private List<MemberRecipe> memberRecipeList = new ArrayList<>();
 
 // 이 Recipe 생성 후 RecipeIngredient의 인자로 넣기. 스크랩 할 때는 MemberRecipe의 인자로 넣기
