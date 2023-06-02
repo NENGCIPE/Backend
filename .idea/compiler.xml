@@ -12,8 +12,10 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="Nengcipe-Backend" target="17" />
       <module name="Nengcipe-Backend.Nengcipe-Backend.main" target="17" />
       <module name="Nengcipe-Backend.Nengcipe-Backend.test" target="17" />
+      <module name="Nengcipe-Backend.test" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>
