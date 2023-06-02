@@ -1,5 +1,6 @@
 package Nengcipe.NengcipeBackend.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,8 +19,17 @@ public class Recipe {
     @Column(name = "recipe_id")
     private Long id;
     private String recipeName;
+    @Lob
     private String recipeDetail;
+    @Lob
+    private StringBuilder recipeIngredName;
+    @Lob
+    private StringBuilder recipeIngredAmount;
+    @Lob
+    private String imgUrl;
+
     @OneToMany(mappedBy = "recipe")
+    @JsonIgnore
     private List<MemberRecipe> memberRecipeList = new ArrayList<>();
     @OneToMany(mappedBy = "recipe")
     private List<IngredientRecipe> ingredientRecipeList = new ArrayList<>();

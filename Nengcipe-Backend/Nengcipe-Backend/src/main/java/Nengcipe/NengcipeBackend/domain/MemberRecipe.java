@@ -1,5 +1,6 @@
 package Nengcipe.NengcipeBackend.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,6 +14,7 @@ public class MemberRecipe {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
+    @JsonIgnore
     private Member member;
     @ManyToOne
     private Recipe recipe;

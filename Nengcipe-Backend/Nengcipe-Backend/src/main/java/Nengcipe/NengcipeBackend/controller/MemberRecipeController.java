@@ -62,7 +62,7 @@ public class MemberRecipeController {
                 return new ResponseEntity<>(errRes, HttpStatus.CONFLICT);
             }
 
-            MemberRecipe memberRecipe = memberRecipeService.createScrapRecipe(memberRecipeRequestDto,member, recipe);
+            MemberRecipe memberRecipe = memberRecipeService.createScrapRecipe(member, recipe);
             MemberRecipeResponseDto response = MemberRecipeResponseDto.of(memberRecipe);
 
             res = ResultResponse.builder()
