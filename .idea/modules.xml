@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Nengcipe-Backend.iml" filepath="$PROJECT_DIR$/.idea/modules/Nengcipe-Backend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Nengcipe-Backend.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Nengcipe-Backend.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Nengcipe-Backend.test.iml" filepath="$PROJECT_DIR$/.idea/modules/Nengcipe-Backend.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/please.iml" filepath="$PROJECT_DIR$/.idea/please.iml" />
+    </modules>
+  </component>
+</project>
