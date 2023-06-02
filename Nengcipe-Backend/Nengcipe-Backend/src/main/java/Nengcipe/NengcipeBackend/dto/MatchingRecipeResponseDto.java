@@ -24,6 +24,7 @@ public class MatchingRecipeResponseDto{
                 .recipeDetail(recipe.getRecipeDetail())
                 .recipeIngredName(recipe.getRecipeIngredName())
                 .recipeIngredAmount(recipe.getRecipeIngredAmount())
+                .imgUrl(recipe.getImgUrl())
                 .build();
     }
 }

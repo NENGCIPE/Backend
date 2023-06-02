@@ -13,5 +13,6 @@ import java.util.Optional;
 @Repository
 public interface RecipeRepository extends JpaRepository<Recipe, Long> {
     // db에 저장된 Recipe 목록 가져오기
-    List<Recipe> findAll();
+    public List<Recipe> findAll();
+    public Optional<Recipe> findById(String recipeId);
 }

@@ -5,6 +5,7 @@ import Nengcipe.NengcipeBackend.domain.Ingredient;
 import Nengcipe.NengcipeBackend.domain.Member;
 import Nengcipe.NengcipeBackend.domain.Recipe;
 import Nengcipe.NengcipeBackend.dto.IngredientDto;
+import Nengcipe.NengcipeBackend.dto.MatchingRecipeResponseDto;
 import Nengcipe.NengcipeBackend.exception.NotFoundException;
 import Nengcipe.NengcipeBackend.repository.IngredientRepository;
 import Nengcipe.NengcipeBackend.repository.RecipeRepository;
@@ -41,8 +42,25 @@ public class RecipeService {
                 }
             }
         }
-        System.out.println(matchingRecipes);
         return matchingRecipes;
     }
+
+    public Recipe getRecipeById(Long recipeId, Member member) throws NotFoundException {
+        Optional<Recipe> recipeInfo = recipeRepository.findById(recipeId);
+        return recipeInfo.get();
+    }
+
+    /*
+    * lic Member deleteMember(Long id) throws NotFoundException {
+        Optional<Member> findMember = memberRepository.findById(id);
+        if (findMember.isEmpty()) {
+            MemberResponseDto memberReq = MemberResponseDto.of(findMember.get());
+            throw new NotFoundException("유저 아이디", memberReq);
+        }
+        memberRepository.delete(findMember.get());
+        return findMember.get();
+    *
+    * */
 }
+
 

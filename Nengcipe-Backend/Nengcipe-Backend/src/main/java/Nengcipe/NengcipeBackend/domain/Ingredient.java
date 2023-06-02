@@ -42,7 +42,6 @@ public class Ingredient {
     public void subQuantity() {
         if (this.quantity > 0) {
             this.quantity-=1;
-
         }
     }
 

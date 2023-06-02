@@ -17,7 +17,6 @@ import java.io.IOException;
 
 @Service
 @RequiredArgsConstructor
-@Component
 public class CrawlingRecipeService {
 
     private final RecipeRepository recipeRepository;
