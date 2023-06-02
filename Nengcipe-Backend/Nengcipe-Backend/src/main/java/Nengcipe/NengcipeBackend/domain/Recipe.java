@@ -45,11 +45,4 @@ public class Recipe {
         this.imgUrl = imgUrl;
     }
 
-
-/*    public void setRecipeName(String recipeName) { this.recipeName = recipeName; }
-    public void setRecipeDetail(String recipeDetail) { this.recipeDetail = recipeDetail;}
-    public void setRecipeIngredName(StringBuilder recipeIngredName) { this.recipeIngredName = recipeIngredName; }
-    public void setRecipeIngredAmount(StringBuilder recipeIngredAmount) { this.recipeIngredAmount = recipeIngredAmount; }
-    public void setImgUrl(String imgUrl) { this.imgUrl = imgUrl; }*/
-
 }
