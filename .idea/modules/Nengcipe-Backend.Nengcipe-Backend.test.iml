@@ -122,5 +122,4 @@
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.glassfish.jaxb:txw2:4.0.2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.sun.istack:istack-commons-runtime:4.1.1" level="project" />
   </component>
-  <component name="TestModuleProperties" production-module="Nengcipe-Backend.main" />
 </module>
