@@ -27,5 +27,6 @@ public class MemberRecipe {
         recipe.getMemberRecipeList().add(this);
     }
 
+
 }
 

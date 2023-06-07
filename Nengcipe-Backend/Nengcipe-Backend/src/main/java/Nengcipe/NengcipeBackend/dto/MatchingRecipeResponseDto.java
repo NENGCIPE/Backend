@@ -12,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class MatchingRecipeResponseDto{
 
+    private Long recipeId;
     private String recipeName;
     private String recipeDetail;
     private StringBuilder recipeIngredName;
@@ -20,6 +21,7 @@ public class MatchingRecipeResponseDto{
 
     public static MatchingRecipeResponseDto of(Recipe recipe) {
         return MatchingRecipeResponseDto.builder()
+                .recipeId(recipe.getId())
                 .recipeName(recipe.getRecipeName())
                 .recipeDetail(recipe.getRecipeDetail())
                 .recipeIngredName(recipe.getRecipeIngredName())

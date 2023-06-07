@@ -24,7 +24,7 @@ public class RecipeService {
     public List<Recipe> findMatchingRecipes(Member member, List<Ingredient> ingredient) throws NotFoundException {
 
         List<Recipe> CrawlingRecipeList = recipeRepository.findAll();
-       List<Recipe> matchingRecipes = new ArrayList<>();
+        List<Recipe> matchingRecipes = new ArrayList<>();
 
         for (Recipe recipeIngredient : CrawlingRecipeList) {
             boolean flag = false;
@@ -42,13 +42,17 @@ public class RecipeService {
                 }
             }
         }
+
+
         return matchingRecipes;
     }
 
+/*
     public Recipe getRecipeById(Long recipeId, Member member) throws NotFoundException {
         Optional<Recipe> recipeInfo = recipeRepository.findById(recipeId);
         return recipeInfo.get();
     }
+*/
 
     public Recipe findRecipeById(Long id) throws NotFoundException {
         Optional<Recipe> recipe = recipeRepository.findById(id);

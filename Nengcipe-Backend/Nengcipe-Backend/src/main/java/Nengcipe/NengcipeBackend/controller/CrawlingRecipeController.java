@@ -39,7 +39,7 @@ public class CrawlingRecipeController {
             Member member = memberService.findById(member_id);
 
             /*  Recipe Crawling하기. */
-            crawlingRecipeService.crawlingRecipes(member);
+            crawlingRecipeService.crawlingRecipes();
 
             /*  Crawling 레시피와 재료 비교하여 레시피 목록 나열하기  */
             List<Ingredient> ingredients = member.getIngredientList();
@@ -77,9 +77,8 @@ public class CrawlingRecipeController {
             String token = (String) request.getAttribute("token");
             Long id = jwtUtil.getId(token); //멤버 PK 가져옴
             Member member = memberService.findById(id);
+            Recipe recipe = recipeService.findRecipeById(recipeId);
 
-            //권한 체크는 서비스 계층에서
-            Recipe recipe = recipeService.getRecipeById(recipeId, member);
             MatchingRecipeResponseDto response = MatchingRecipeResponseDto.of(recipe);
 
             res = ResultResponse.builder()

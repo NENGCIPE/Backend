@@ -54,8 +54,6 @@ public class MemberRecipeService {
         Optional<MemberRecipe> delMemberRecipe = memberRecipeRepository.findByMemberAndRecipe(member, recipe);
         memberRecipeRepository.delete(delMemberRecipe.get());
         return delMemberRecipe.get();
-
-
     }
 
 
