@@ -22,9 +22,7 @@ public class CrawlingRecipeService {
     private final RecipeRepository recipeRepository;
 
     @Transactional
-    public void crawlingRecipes(Member member) {
-
-        System.out.println("start");
+    public void crawlingRecipes() {
         // 시작 페이지와 종료 페이지 설정
         int startPage = 6999000;
         int endPage = 6999010;
@@ -103,14 +101,15 @@ public class CrawlingRecipeService {
                     imgUrl = "null";
                 }
 
-                System.out.println(imgUrl);
                 Recipe recipe = Recipe.builder()
                                 .recipeName(recipeName).recipeDetail(recipeDetails)
                                 .recipeIngredName(recipeIngredName).recipeIngredAmount(recipeIngredAmount)
                                 .imgUrl(imgUrl)
                                 .build();
 
-                recipeRepository.save(recipe);
+                if (!recipeRepository.existsByRecipeName(recipeName)) {
+                    recipeRepository.save(recipe);
+                }
 
             } catch (IOException e) {
                 System.out.println("Error occurred while scraping recipe from URL: " + url);

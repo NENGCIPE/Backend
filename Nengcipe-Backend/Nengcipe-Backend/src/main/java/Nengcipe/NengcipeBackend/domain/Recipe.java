@@ -45,4 +45,15 @@ public class Recipe {
         this.imgUrl = imgUrl;
     }
 
+
+    /*
+    * @Builder(builderClassName = "MyMemberRecipe" , builderMethodName = "myMemberRecipe")
+    public MemberRecipe(Member member, Recipe recipe) {
+        this.member=member;
+        this.recipe=recipe;
+        member.getMemberRecipeList().add(this);
+        recipe.getMemberRecipeList().add(this);
+    }
+*/
+
 }
