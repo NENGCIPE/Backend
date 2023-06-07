@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -91,21 +92,24 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         } catch (RuntimeException e) {
             //해당 유저가 없으면 에러 반환. 이 부분은 나중에 구체적으로 변경하기.
             //에러 JSON 반환
+            System.out.println("e = " + e.getMessage());
+            System.out.println("e = " + e.getClass());
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             response.setCharacterEncoding("utf-8");
             MemberResponseDto memberResponseDto = new MemberResponseDto(memberDto.getMemberId());
             log.info("id : {} 로그인 실패", memberDto.getMemberId());
             res = ResultResponse.builder()
-                    .code(HttpServletResponse.SC_NOT_FOUND)
-                    .message("해당 유저를 찾지 못했습니다.")
+                    .code(HttpServletResponse.SC_BAD_REQUEST)
+                    .message(e.getMessage())
                     .result(memberResponseDto).build();
             try {
                 String s = objectMapper.writeValueAsString(res);
                 PrintWriter writer = response.getWriter();
                 writer.write(s);
                 return null;
-            } catch (IOException ex) {
+            }
+            catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
         }

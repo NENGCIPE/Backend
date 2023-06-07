@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,7 +20,7 @@ public class Category {
     private String categoryName;
     @OneToMany(mappedBy = "category")
     @JsonIgnore
-    private List<Ingredient> ingredientList;
+    private List<Ingredient> ingredientList=new ArrayList<>();
     @Builder
     public Category(String categoryName) {
         this.categoryName=categoryName;

@@ -14,8 +14,11 @@
     <bytecodeTargetLevel>
       <module name="Nengcipe-Backend" target="17" />
       <module name="Nengcipe-Backend.main" target="17" />
+      <module name="Nengcipe-Backend.Nengcipe-Backend" target="17" />
       <module name="Nengcipe-Backend.Nengcipe-Backend.main" target="17" />
+      <module name="Nengcipe-Backend.Nengcipe-Backend.main~1" target="17" />
       <module name="Nengcipe-Backend.Nengcipe-Backend.test" target="17" />
+      <module name="Nengcipe-Backend.Nengcipe-Backend.test~1" target="17" />
       <module name="Nengcipe-Backend.test" target="17" />
     </bytecodeTargetLevel>
   </component>

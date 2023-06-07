@@ -2,6 +2,8 @@ package Nengcipe.NengcipeBackend.config;
 
 import Nengcipe.NengcipeBackend.filter.JwtAuthenticationFilter;
 import Nengcipe.NengcipeBackend.filter.JwtAuthorizationFilter;
+import Nengcipe.NengcipeBackend.oauth2.OAuth2MemberService;
+import Nengcipe.NengcipeBackend.oauth2.OAuth2SuccessHandler;
 import Nengcipe.NengcipeBackend.repository.MemberRepository;
 import Nengcipe.NengcipeBackend.util.JwtUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,6 +28,8 @@ public class SecurityConfig {
     private final JwtUtil jwtUtil;
     private final ObjectMapper objectMapper;
     private final MemberRepository memberRepository;
+    private final OAuth2MemberService oAuth2MemberService;
+    private final OAuth2SuccessHandler oAuth2SuccessHandler;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
         return httpSecurity
@@ -41,10 +45,16 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST,"/api/users/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/recipes/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/users/login").permitAll()
+                .requestMatchers(HttpMethod.GET, "/oauth2/login/**").permitAll()
                 .requestMatchers("/").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .build();
+                .oauth2Login()
+                .authorizationEndpoint().baseUri("/oauth2/authorization")
+                .and().redirectionEndpoint().baseUri("/login/oauth2/code/*")
+                .and()
+                .userInfoEndpoint().userService(oAuth2MemberService)
+                .and().successHandler(oAuth2SuccessHandler).and().build();
     }
 
     public class MyCustom extends AbstractHttpConfigurer<MyCustom, HttpSecurity> {

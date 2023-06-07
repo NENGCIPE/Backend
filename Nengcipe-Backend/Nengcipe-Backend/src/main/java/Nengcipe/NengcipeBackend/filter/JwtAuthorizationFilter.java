@@ -46,8 +46,23 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         //만료 여부 체크
         if (jwtUtil.isExpired(token)) {
             log.info("id : {} 토큰 만료", memberId);
-            chain.doFilter(request, response);
-            return;
+            MemberResponseDto responseDto = MemberResponseDto.builder().memberId(memberId).build();
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            response.setCharacterEncoding("utf-8");
+            ResultResponse res = ResultResponse.builder()
+                    .code(HttpServletResponse.SC_FORBIDDEN)
+                    .message("토큰 만료")
+                    .result(responseDto).build();
+            try {
+                ObjectMapper objectMapper = new ObjectMapper();
+                String s = objectMapper.writeValueAsString(res);
+                PrintWriter writer = response.getWriter();
+                writer.write(s);
+                return;
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         }
         //이 아래 코드가 실행된다는 뜻은 유효한 토큰이라는 뜻
         Optional<Member> member = memberRepository.findByMemberId(memberId);

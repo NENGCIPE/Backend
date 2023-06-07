@@ -31,6 +31,7 @@
     <orderEntry type="library" name="Gradle: io.jsonwebtoken:jjwt:0.9.1" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-data-jpa:3.0.5" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-security:3.0.5" level="project" />
+    <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-oauth2-client:3.0.5" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-validation:3.0.5" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-web:3.0.5" level="project" />
     <orderEntry type="library" name="Gradle: javax.xml.bind:jaxb-api:2.3.0" level="project" />
@@ -48,6 +49,9 @@
     <orderEntry type="library" name="Gradle: org.springframework.security:spring-security-config:6.0.2" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.security:spring-security-web:6.0.2" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework:spring-aop:6.0.7" level="project" />
+    <orderEntry type="library" name="Gradle: org.springframework.security:spring-security-oauth2-client:6.0.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.springframework.security:spring-security-oauth2-jose:6.0.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.springframework.security:spring-security-core:6.0.2" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.tomcat.embed:tomcat-embed-el:10.1.7" level="project" />
     <orderEntry type="library" name="Gradle: org.hibernate.validator:hibernate-validator:8.0.0.Final" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-json:3.0.5" level="project" />
@@ -67,7 +71,6 @@
     <orderEntry type="library" name="Gradle: org.springframework:spring-test:6.0.7" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework:spring-core:6.0.7" level="project" />
     <orderEntry type="library" name="Gradle: org.xmlunit:xmlunit-core:2.9.1" level="project" />
-    <orderEntry type="library" name="Gradle: org.springframework.security:spring-security-core:6.0.2" level="project" />
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.14.2" level="project" />
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.14.2" level="project" />
     <orderEntry type="library" name="Gradle: org.aspectj:aspectjweaver:1.9.19" level="project" />
@@ -87,6 +90,11 @@
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-logging:3.0.5" level="project" />
     <orderEntry type="library" name="Gradle: org.yaml:snakeyaml:1.33" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework:spring-expression:6.0.7" level="project" />
+    <orderEntry type="library" name="Gradle: org.springframework.security:spring-security-oauth2-core:6.0.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.nimbusds:oauth2-oidc-sdk:9.43.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.nimbusds:nimbus-jose-jwt:9.24.4" level="project" />
+    <orderEntry type="library" name="Gradle: org.springframework.security:spring-security-crypto:6.0.2" level="project" />
+    <orderEntry type="library" name="Gradle: io.micrometer:micrometer-observation:1.10.5" level="project" />
     <orderEntry type="library" name="Gradle: jakarta.validation:jakarta.validation-api:3.0.2" level="project" />
     <orderEntry type="library" name="Gradle: org.jboss.logging:jboss-logging:3.5.0.Final" level="project" />
     <orderEntry type="library" name="Gradle: com.fasterxml:classmate:1.5.1" level="project" />
@@ -95,7 +103,6 @@
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.module:jackson-module-parameter-names:2.14.2" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.tomcat.embed:tomcat-embed-websocket:10.1.7" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.tomcat.embed:tomcat-embed-core:10.1.7" level="project" />
-    <orderEntry type="library" name="Gradle: io.micrometer:micrometer-observation:1.10.5" level="project" />
     <orderEntry type="library" name="Gradle: net.minidev:json-smart:2.4.10" level="project" />
     <orderEntry type="library" name="Gradle: jakarta.activation:jakarta.activation-api:2.1.1" level="project" />
     <orderEntry type="library" name="Gradle: net.bytebuddy:byte-buddy:1.12.23" level="project" />
@@ -104,10 +111,12 @@
     <orderEntry type="library" name="Gradle: net.bytebuddy:byte-buddy-agent:1.12.23" level="project" />
     <orderEntry type="library" name="Gradle: com.vaadin.external.google:android-json:0.0.20131108.vaadin1" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework:spring-jcl:6.0.7" level="project" />
-    <orderEntry type="library" name="Gradle: org.springframework.security:spring-security-crypto:6.0.2" level="project" />
     <orderEntry type="library" name="Gradle: ch.qos.logback:logback-classic:1.4.6" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-to-slf4j:2.19.0" level="project" />
     <orderEntry type="library" name="Gradle: org.slf4j:jul-to-slf4j:2.0.7" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.stephenc.jcip:jcip-annotations:1.0-1" level="project" />
+    <orderEntry type="library" name="Gradle: com.nimbusds:content-type:2.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.nimbusds:lang-tag:1.7" level="project" />
     <orderEntry type="library" name="Gradle: io.micrometer:micrometer-commons:1.10.5" level="project" />
     <orderEntry type="library" name="Gradle: net.minidev:accessors-smart:2.4.9" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.apiguardian:apiguardian-api:1.1.2" level="project" />

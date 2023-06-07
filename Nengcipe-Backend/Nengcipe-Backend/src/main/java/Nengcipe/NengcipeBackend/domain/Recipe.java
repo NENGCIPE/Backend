@@ -21,14 +21,14 @@ public class Recipe {
     private Long id;
 
     private String recipeName;
-    @Lob
+    @Column(length = 20000)
     private String recipeDetail;
 
-    @Lob
+    @Column(length = 20000)
     private StringBuilder recipeIngredName;
-    @Lob
+    @Column(length = 20000)
     private StringBuilder recipeIngredAmount;
-    @Lob
+    @Column(length = 20000)
     private String imgUrl;
 
     @OneToMany(mappedBy = "recipe")

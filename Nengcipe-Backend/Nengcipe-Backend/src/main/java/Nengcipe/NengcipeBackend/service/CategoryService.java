@@ -34,7 +34,7 @@ public class CategoryService {
         if (category.isEmpty()) {
             Category cate = Category.builder().categoryName(name).build();
             categoryRepository.save(cate);
-            return cate;
+            return categoryRepository.findByCategoryName(name).get();
         }
         return category.get();
     }
