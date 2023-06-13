@@ -72,6 +72,7 @@ public class MemberController {
     public ResponseEntity<ResultResponse> registerIngredient(@RequestBody IngredientDto ingredientDto, HttpServletRequest request) throws NotFoundException {
         //이후 프론트로부터 받은 사진을 네이버 OCR API로 보내는 로직을 작성해야한다.
         //OCR API로 부터 정보들을 받으면 레포지토리에 저장한다.
+        System.out.println("ingredientDto = " + ingredientDto.getExpirationDate());
         String token = (String) request.getAttribute("token");
         Long id = jwtUtil.getId(token); //멤버 PK 가져옴
         Member member = memberService.findById(id);

@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -15,8 +17,8 @@ public class Ingredient {
     private Long id;
 
     private String ingredName;
-    @Setter
     private int quantity;
+    private LocalDate expiratioinDate;
     @ManyToOne
     @JsonIgnore
     private Member member;
@@ -27,11 +29,12 @@ public class Ingredient {
 //    private List<IngredientRecipe> ingredientRecipeList = new ArrayList<>();
 
     @Builder
-    public Ingredient(String ingredName, Integer quantity, Category category, Member member) {
+    public Ingredient(String ingredName, Integer quantity, LocalDate expirationDate, Category category, Member member) {
         this.ingredName=ingredName;
         this.quantity=quantity;
         this.category=category;
         this.member=member;
+        this.expiratioinDate = expirationDate;
         member.getIngredientList().add(this);
         category.getIngredientList().add(this); //category에 저장.
     }

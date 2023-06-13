@@ -74,9 +74,6 @@ public class CrawlingRecipeController {
     public ResponseEntity<ResultResponse> getRecipeDetails(HttpServletRequest request, @PathVariable Long recipeId) throws NotFoundException {
         ResultResponse res;
         try {
-            String token = (String) request.getAttribute("token");
-            Long id = jwtUtil.getId(token); //멤버 PK 가져옴
-            Member member = memberService.findById(id);
             Recipe recipe = recipeService.findRecipeById(recipeId);
 
             MatchingRecipeResponseDto response = MatchingRecipeResponseDto.of(recipe);

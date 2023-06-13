@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
+
 @Getter
 @Builder
 @NoArgsConstructor
@@ -16,11 +18,13 @@ public class IngredientResponseDto {
     private String ingredName;
     private Integer quantity;
     private String categoryName;
+    private LocalDate expirationDate;
     public static IngredientResponseDto of(Ingredient ingredient) {
         return IngredientResponseDto.builder()
                 .id(ingredient.getId())
                 .ingredName(ingredient.getIngredName())
                 .quantity(ingredient.getQuantity())
+                .expirationDate(ingredient.getExpiratioinDate())
                 .categoryName(ingredient.getCategory().getCategoryName()).build();
     }
 }

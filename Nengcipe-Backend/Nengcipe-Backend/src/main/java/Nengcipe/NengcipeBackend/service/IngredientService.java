@@ -34,6 +34,7 @@ public class IngredientService {
             Ingredient ingredient = Ingredient.builder()
                     .ingredName(ingredientDto.getIngredName())
                     .quantity(ingredientDto.getQuantity())
+                    .expirationDate(ingredientDto.getExpirationDate())
                     .category(category)
                     .member(member).build();
             ingredientRepository.save(ingredient);

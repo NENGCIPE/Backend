@@ -43,7 +43,7 @@ public class SecurityConfig {
                 .cors().and()
                 .authorizeRequests()
                 .requestMatchers(HttpMethod.POST,"/api/users/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/recipes/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/recipes/{recipeId}").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/users/login").permitAll()
                 .requestMatchers(HttpMethod.GET, "/oauth2/login/**").permitAll()
                 .requestMatchers("/").permitAll()
