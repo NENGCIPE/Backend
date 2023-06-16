@@ -16,19 +16,18 @@ import java.util.List;
 @AllArgsConstructor
 public class Recipe {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "recipe_id")
     private Long id;
-
+    @Column(length=2000)
     private String recipeName;
-    @Column(length = 20000)
+    @Column(length = 2000)
     private String recipeDetail;
 
-    @Column(length = 20000)
-    private StringBuilder recipeIngredName;
-    @Column(length = 20000)
-    private StringBuilder recipeIngredAmount;
-    @Column(length = 20000)
+    @Column(length = 2000)
+    private String recipeIngredName;
+    @Column(length = 2000)
+    private String recipeIngredAmount;
+    @Column(length = 2000)
     private String imgUrl;
 
     @OneToMany(mappedBy = "recipe")
@@ -37,7 +36,7 @@ public class Recipe {
 
 // 이 Recipe 생성 후 RecipeIngredient의 인자로 넣기. 스크랩 할 때는 MemberRecipe의 인자로 넣기
     @Builder
-    public Recipe(String recipeName, String recipeDetail, StringBuilder recipeIngredName, StringBuilder recipeIngredAmount, String imgUrl) {
+    public Recipe(String recipeName, String recipeDetail, String recipeIngredName, String recipeIngredAmount, String imgUrl) {
         this.recipeName = recipeName;
         this.recipeIngredName = recipeIngredName;
         this.recipeIngredAmount = recipeIngredAmount;

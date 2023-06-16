@@ -15,12 +15,16 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
 public class RecipeService {
     private final RecipeRepository recipeRepository;
 
+    /**
+     * 내 재료에 맞는 레시피를 랜덤으로 10개 추출
+     */
     public List<Recipe> findMatchingRecipes(Member member, List<Ingredient> ingredient) throws NotFoundException {
 
         List<Recipe> CrawlingRecipeList = recipeRepository.findAll();
@@ -29,9 +33,9 @@ public class RecipeService {
         for (Recipe recipeIngredient : CrawlingRecipeList) {
             boolean flag = false;
             for (Ingredient ingredientNameList : ingredient) {
-                String[] ingredArr = recipeIngredient.getRecipeIngredName().toString().split(",");
+                String[] ingredArr = recipeIngredient.getRecipeIngredName().split(",");
                 for (String value : ingredArr) {
-                    if (value.equals(ingredientNameList.getIngredName())) {
+                    if (ingredientNameList.getIngredName().contains(value)) {
                         flag = true;
                         break;
                     }
@@ -42,9 +46,18 @@ public class RecipeService {
                 }
             }
         }
+        ArrayList<Recipe> randomList = new ArrayList<>();
+        Random random = new Random();
+        for (int i = 0; i < 10; i++) {
+            int randomInt = random.nextInt(matchingRecipes.size());
+            Recipe randomRecipe = matchingRecipes.get(randomInt);
+            randomList.add(randomRecipe);
+            matchingRecipes.remove(randomInt);
+
+        }
 
 
-        return matchingRecipes;
+        return randomList;
     }
 
 /*

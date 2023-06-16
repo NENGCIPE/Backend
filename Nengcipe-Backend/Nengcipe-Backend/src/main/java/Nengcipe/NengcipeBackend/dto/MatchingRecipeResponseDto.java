@@ -15,8 +15,8 @@ public class MatchingRecipeResponseDto{
     private Long recipeId;
     private String recipeName;
     private String recipeDetail;
-    private StringBuilder recipeIngredName;
-    private StringBuilder recipeIngredAmount;
+    private String recipeIngredName;
+    private String recipeIngredAmount;
     private String imgUrl;
 
     public static MatchingRecipeResponseDto of(Recipe recipe) {

@@ -23,7 +23,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CrawlingRecipeController {
 
-    private final CrawlingRecipeService crawlingRecipeService;
     private final RecipeService recipeService;
     private final MemberService memberService;
     private final IngredientService ingredientService;
@@ -38,8 +37,6 @@ public class CrawlingRecipeController {
             Long member_id = jwtUtil.getId(token);
             Member member = memberService.findById(member_id);
 
-            /*  Recipe Crawling하기. */
-            crawlingRecipeService.crawlingRecipes();
 
             /*  Crawling 레시피와 재료 비교하여 레시피 목록 나열하기  */
             List<Ingredient> ingredients = member.getIngredientList();
